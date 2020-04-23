@@ -66,7 +66,7 @@ void svg_end()
 }
 
 void
-show_histogram_svg(const vector<size_t>& bins)
+show_histogram_svg(const vector<size_t>& bins, double &scaling, size_t &avg_bin)
 {
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
@@ -79,9 +79,22 @@ show_histogram_svg(const vector<size_t>& bins)
     double top = 0;
     for (size_t bin : bins)
     {
-        const double bin_width = BLOCK_WIDTH * bin;
+        string stroke, fill;
+
+        if (bin <= avg_bin)
+        {
+            stroke = "green";
+            fill = "#00FF00";
+        }
+        else
+        {
+            stroke = "red";
+            fill = "#FF0000";
+        }
+
+        const double bin_width = BLOCK_WIDTH * bin * scaling;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
-        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT);
+        svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, stroke, fill);
         top += BIN_HEIGHT;
     }
 
