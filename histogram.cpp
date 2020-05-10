@@ -39,7 +39,7 @@ vector <size_t> make_histogram(const vector<double>& numbers,size_t bin_count)
 
 
 void
-show_histogram_svg(const vector<size_t>& bins, double &scaling, size_t &avg_bin)
+show_histogram_svg(const vector<size_t>& bins, double scaling, size_t &avg_bin)
 {
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
@@ -70,7 +70,7 @@ show_histogram_svg(const vector<size_t>& bins, double &scaling, size_t &avg_bin)
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, stroke, fill);
         top += BIN_HEIGHT;
     }
-
+    svg_end();
 }
 
 

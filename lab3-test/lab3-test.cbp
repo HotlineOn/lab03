@@ -31,6 +31,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../avg_bin+scaling.cpp" />
+		<Unit filename="../avg_bin+scaling.h" />
 		<Unit filename="../histogram.cpp" />
 		<Unit filename="../histogram.h" />
 		<Unit filename="../svg.cpp" />
