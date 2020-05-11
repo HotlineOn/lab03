@@ -1,6 +1,6 @@
-#include "E:\Progs\CodeBlocks\lab3\histogram.h"
-#include "E:\Progs\CodeBlocks\lab3\svg.h"
-#include "E:\Progs\CodeBlocks\lab3\avg_bin+scaling.h"
+#include "../histogram.h"
+#include "../svg.h"
+#include "../avg_bin+scaling.h"
 #include <iostream>
 #include <cassert>
 #include <fstream>
@@ -61,11 +61,11 @@ test_svg(ifstream &fin)
         fin >> numbers[i];
     size_t bin_count;
     fin >> bin_count;
+    fin.close();
     const auto bins = make_histogram(numbers, bin_count);
     double scaling = scale(bins);
     size_t avg_bin = average_bin(number_count, bin_count);
     show_histogram_svg(bins, scaling, avg_bin);
-    fin.close();
 }
 
 int
@@ -76,9 +76,9 @@ main()
     test_equal();
     test_double();
     test_empty();
-    ifstream fin1("E:\\Progs\\CodeBlocks\\lab3-test\\bin\\Debug\\marks1.txt");
+    ifstream fin1("bin\\Debug\\marks1.txt");
     test_svg(fin1);
     Sleep(10000); //в течение 10 секунд тестировщик должен посмотреть результат вывода для файла fin1, затем, после окончания действия программы, снова проверить svg файл
-    ifstream fin2("E:\\Progs\\CodeBlocks\\lab3-test\\bin\\Debug\\marks2.txt");
+    ifstream fin2("bin\\Debug\\marks2.txt");
     test_svg(fin2);
 }

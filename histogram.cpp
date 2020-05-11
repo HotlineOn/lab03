@@ -93,5 +93,5 @@ void find_minmax(const vector<double> numbers, double& min, double& max)
             }
         }
     }
-    else cerr << "ERROR\n";
+    else cerr << "ERROR1\n";
 }
