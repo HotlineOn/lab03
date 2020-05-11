@@ -17,17 +17,17 @@ input_numbers(size_t count, istream& in)
 
 
 
-vector <size_t> make_histogram(const vector<double>& numbers,size_t bin_count)
+vector <size_t> make_histogram(Input input)
 {
-    double min = numbers[0];
-    double max = numbers[0];
-    find_minmax(numbers,min,max);
-    vector<size_t> bins(bin_count,0);
-    for (double number : numbers)
+    double min = input.numbers[0];
+    double max = input.numbers[0];
+    find_minmax(input.numbers,min,max);
+    vector<size_t> bins(input.bin_count,0);
+    for (double number : input.numbers)
     {
         size_t bin;
-        bin = (number - min) / (max - min) * bin_count;
-        if (bin == bin_count)
+        bin = (number - min) / (max - min) * input.bin_count;
+        if (bin == input.bin_count)
         {
             bin--;
         }

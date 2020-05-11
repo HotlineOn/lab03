@@ -2,6 +2,7 @@
 #include <vector>
 #include "histogram.h"
 #include "avg_bin+scaling.h"
+#include <typeinfo>
 
 using namespace std;
 
@@ -26,9 +27,9 @@ read_input(istream& in, bool prompt) {
 
 int main()
 {
-    const auto data = read_input(cin, true);
+    const auto input = read_input(cin, true);
 
-    const auto bins = make_histogram(data.numbers, data.bin_count);
+    const auto bins = make_histogram(input);
 
     double scaling = scale(bins);
     show_histogram_svg(bins, scaling);
