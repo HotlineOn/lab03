@@ -5,22 +5,38 @@
 
 using namespace std;
 
-int main()
+struct Input
 {
-    size_t number_count;
+    vector<double> numbers;
+    size_t bin_count;
+};
+
+Input
+read_input(istream& in) {
+    Input data;
+
     cerr << "Enter number count: ";
+    size_t number_count;
     cin >> number_count;
+
     cerr << "Enter numbers: ";
-    const auto numbers = input_numbers(number_count);
+    data.numbers = input_numbers(number_count, in);
+
     size_t bin_count;
     cerr << "Enter column count: ";
     cin >> bin_count;
-    double min, max;
-    find_minmax(numbers, min, max);
-    const auto bins = make_histogram(numbers, bin_count);
+    data.bin_count = bin_count;
+
+    return data;
+}
+
+int main()
+{
+    const auto data = read_input(cin);
+
+    const auto bins = make_histogram(data.numbers, data.bin_count);
 
     double scaling = scale(bins);
-    size_t avg_bin = average_bin(number_count, bin_count);
-    show_histogram_svg(bins, scaling, avg_bin);
+    show_histogram_svg(bins, scaling);
     return 0;
 }

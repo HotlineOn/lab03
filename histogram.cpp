@@ -4,12 +4,12 @@
 #include <vector>
 
 vector<double>
-input_numbers(size_t count)
+input_numbers(size_t count, istream& in)
 {
     vector<double> result(count);
     for (size_t i = 0; i < count; i++)
     {
-        cin >> result[i];
+        in >> result[i];
     }
     return result;
 }
@@ -39,7 +39,7 @@ vector <size_t> make_histogram(const vector<double>& numbers,size_t bin_count)
 
 
 void
-show_histogram_svg(const vector<size_t>& bins, double scaling, size_t &avg_bin)
+show_histogram_svg(const vector<size_t>& bins, double scaling)
 {
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
@@ -53,17 +53,6 @@ show_histogram_svg(const vector<size_t>& bins, double scaling, size_t &avg_bin)
     for (size_t bin : bins)
     {
         string stroke, fill;
-
-        if (bin <= avg_bin)
-        {
-            stroke = "green";
-            fill = "#00FF00";
-        }
-        else
-        {
-            stroke = "red";
-            fill = "#FF0000";
-        }
 
         const double bin_width = BLOCK_WIDTH * bin * scaling;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));
