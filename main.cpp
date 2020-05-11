@@ -5,12 +5,6 @@
 
 using namespace std;
 
-struct Input
-{
-    vector<double> numbers;
-    size_t bin_count;
-};
-
 Input
 read_input(istream& in) {
     Input data;
