@@ -6,18 +6,18 @@
 using namespace std;
 
 Input
-read_input(istream& in) {
+read_input(istream& in, bool prompt) {
     Input data;
 
-    cerr << "Enter number count: ";
+    if (prompt) cerr << "Enter number count: ";
     size_t number_count;
     cin >> number_count;
 
-    cerr << "Enter numbers: ";
+    if (prompt) cerr << "Enter numbers: ";
     data.numbers = input_numbers(number_count, in);
 
     size_t bin_count;
-    cerr << "Enter column count: ";
+    if (prompt) cerr << "Enter column count: ";
     cin >> bin_count;
     data.bin_count = bin_count;
 
@@ -26,7 +26,7 @@ read_input(istream& in) {
 
 int main()
 {
-    const auto data = read_input(cin);
+    const auto data = read_input(cin, true);
 
     const auto bins = make_histogram(data.numbers, data.bin_count);
 
