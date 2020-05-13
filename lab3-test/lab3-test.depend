@@ -1,11 +1,11 @@
 # depslib dependency file v1.0
-1589103207 source:e:\progs\codeblocks\lab3\histogram.cpp
+1589370324 source:e:\progs\codeblocks\lab3\histogram.cpp
 	"histogram.h"
 	"svg.h"
 	<iostream>
 	<vector>
 
-1589103207 e:\progs\codeblocks\lab3\histogram.h
+1589370324 e:\progs\codeblocks\lab3\histogram.h
 	<vector>
 	<string>
 
@@ -21,7 +21,7 @@
 1589103207 e:\progs\codeblocks\lab3\svg.h
 	<string>
 
-1589105142 source:e:\progs\codeblocks\lab3\svg.cpp
+1589370324 source:e:\progs\codeblocks\lab3\svg.cpp
 	<string>
 	<iostream>
 	<fstream>

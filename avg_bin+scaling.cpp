@@ -24,7 +24,14 @@ double scale (const vector <size_t>& bins)
 
 size_t average_bin (size_t number_count, size_t bin_count)
 {
-    size_t avg_bin = number_count / bin_count;
-    return avg_bin;
+    if (bin_count == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        size_t avg_bin = number_count / bin_count;
+        return avg_bin;
+    }
 }
 

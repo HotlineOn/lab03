@@ -52,22 +52,24 @@ test_double()
 }
 
 void
-test_svg(ifstream &fin)
+test_svg_nonzero()
 {
-    size_t number_count;
-    fin >> number_count;
-    vector <double> numbers (number_count, 0);
-    for (size_t i = 0; i < number_count; i++)
-        fin >> numbers[i];
-    size_t bin_count;
-    fin >> bin_count;
-    fin.close();
-    const auto bins = make_histogram(numbers, bin_count);
-    double scaling = scale(bins);
-    size_t avg_bin = average_bin(number_count, bin_count);
-    show_histogram_svg(bins, scaling, avg_bin);
+    size_t avg_bin = average_bin(5, 2);
+    assert(avg_bin == 2);
 }
 
+void
+test_svg_upzero()
+{
+    size_t avg_bin = average_bin(0, 3);
+    assert (avg_bin == 0);
+}
+void
+test_svg_downzero()
+{
+    size_t avg_bin = average_bin(3, 0);
+    assert (avg_bin == 0);
+}
 int
 main()
 {
@@ -76,9 +78,8 @@ main()
     test_equal();
     test_double();
     test_empty();
-    ifstream fin1("bin\\Debug\\marks1.txt");
-    test_svg(fin1);
-    Sleep(10000); //в течение 10 секунд тестировщик должен посмотреть результат вывода для файла fin1, затем, после окончания действия программы, снова проверить svg файл
-    ifstream fin2("bin\\Debug\\marks2.txt");
-    test_svg(fin2);
+    test_svg_nonzero();
+    test_svg_upzero();
+    test_svg_downzero();
+    return 0;
 }
