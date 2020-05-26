@@ -39,7 +39,7 @@ vector <size_t> make_histogram(Input input)
 
 
 void
-show_histogram_svg(const vector<size_t>& bins, double scaling)
+show_histogram_svg(const vector<size_t>& bins, double scaling, size_t avg_bin)
 {
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;

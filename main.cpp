@@ -8,6 +8,14 @@
 
 using namespace std;
 
+size_t
+write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
+    size_t data_size = item_size * item_count;
+    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+    buffer->write((char*)items, data_size);
+    return 0;
+}
+
 Input
 read_input(istream& in, bool prompt)
 {
@@ -38,12 +46,14 @@ download(const string& address) {
         {
             CURLcode res;
             curl_easy_setopt(curl, CURLOPT_URL, address);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
             res = curl_easy_perform(curl);
             if (res != 0)
             {
                 cout << curl_easy_strerror(res);
                 exit(1);
             }
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
             curl_easy_cleanup(curl);
         }
 
@@ -63,6 +73,7 @@ int main(int argc, char* argv[])
     const auto bins = make_histogram(input);
 
     double scaling = scale(bins);
-    show_histogram_svg(bins, scaling);
+    size_t avg_bin = average_bin(number_count, bin_count);
+    show_histogram_svg(bins, scaling, avg_bin);
     return 0;
 }
