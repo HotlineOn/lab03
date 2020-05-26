@@ -8,12 +8,25 @@
 
 using namespace std;
 
+vector<double> input_numbers(istream& in, const size_t count) {
+    vector<double> result(count);
+    for (size_t i = 0; i < count; i++) {
+        in >> result[i];
+    }
+
+    return result;
+}
+
 size_t
 write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
-    size_t data_size = item_size * item_count;
-    stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
-    buffer->write((char*)items, data_size);
-    return 0;
+    if (ctx)
+    {
+        const size_t data_size = item_size * item_count;
+        stringstream* buffer = reinterpret_cast<stringstream*>(ctx);
+        buffer->write(reinterpret_cast<const char*>(items), data_size);
+        return data_size;
+    }
+    else return 0;
 }
 
 Input
@@ -39,24 +52,22 @@ read_input(istream& in, bool prompt)
 Input
 download(const string& address) {
     stringstream buffer;
-    address.c_str();
     curl_global_init(CURL_GLOBAL_ALL);
         CURL* curl = curl_easy_init();
         if(curl)
         {
             CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, address);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
+            curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
             res = curl_easy_perform(curl);
-            if (res != 0)
+            if (res != CURLE_OK)
             {
                 cout << curl_easy_strerror(res);
                 exit(1);
             }
-            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
             curl_easy_cleanup(curl);
         }
-
     return read_input(buffer, false);
 }
 
@@ -73,7 +84,8 @@ int main(int argc, char* argv[])
     const auto bins = make_histogram(input);
 
     double scaling = scale(bins);
-    size_t avg_bin = average_bin(number_count, bin_count);
+    size_t number_count = sizeof(input.numbers);
+    size_t avg_bin = average_bin(number_count, input.bin_count);
     show_histogram_svg(bins, scaling, avg_bin);
     return 0;
 }
