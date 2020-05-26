@@ -7,7 +7,8 @@
 using namespace std;
 
 Input
-read_input(istream& in, bool prompt) {
+read_input(istream& in, bool prompt)
+{
     Input data;
 
     if (prompt) cerr << "Enter number count: ";
@@ -25,9 +26,22 @@ read_input(istream& in, bool prompt) {
     return data;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
-    curl_global_init(CURL_GLOBAL_ALL);
+    if (argc > 1)
+    {
+        curl_global_init(CURL_GLOBAL_ALL);
+        CURL* curl = curl_easy_init();
+        if(curl)
+        {
+            CURLcode res;
+            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+            res = curl_easy_perform(curl);
+            cout << res << "\n";
+            curl_easy_cleanup(curl);
+        }
+    }
+
     const auto input = read_input(cin, true);
 
     const auto bins = make_histogram(input);
