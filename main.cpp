@@ -3,6 +3,8 @@
 #include "histogram.h"
 #include "avg_bin+scaling.h"
 #include <curl/curl.h>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -26,16 +28,16 @@ read_input(istream& in, bool prompt)
     return data;
 }
 
-int main(int argc, char* argv[])
-{
-    if (argc > 1)
-    {
-        curl_global_init(CURL_GLOBAL_ALL);
+Input
+download(const string& address) {
+    stringstream buffer;
+    address.c_str();
+    curl_global_init(CURL_GLOBAL_ALL);
         CURL* curl = curl_easy_init();
         if(curl)
         {
             CURLcode res;
-            curl_easy_setopt(curl, CURLOPT_URL, argv[1]);
+            curl_easy_setopt(curl, CURLOPT_URL, address);
             res = curl_easy_perform(curl);
             if (res != 0)
             {
@@ -44,9 +46,19 @@ int main(int argc, char* argv[])
             }
             curl_easy_cleanup(curl);
         }
-    }
 
-    const auto input = read_input(cin, true);
+    return read_input(buffer, false);
+}
+
+int main(int argc, char* argv[])
+{
+    Input input;
+    if (argc > 1) {
+        input = download(argv[1]);
+    }
+    else {
+        input = read_input(cin, true);
+    }
 
     const auto bins = make_histogram(input);
 
