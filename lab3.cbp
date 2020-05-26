@@ -31,7 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
+			<Add directory="E:/Progs/CodeBlocks/lab3/curl/include" />
 		</Compiler>
+		<Linker>
+			<Add library="E:/Progs/CodeBlocks/lab3/curl/lib/libcurl.dll.a" />
+			<Add directory="E:/Progs/CodeBlocks/lab3/curl/lib" />
+		</Linker>
 		<Unit filename="avg_bin+scaling.cpp" />
 		<Unit filename="avg_bin+scaling.h" />
 		<Unit filename="histogram.cpp" />
