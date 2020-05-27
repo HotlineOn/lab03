@@ -3,17 +3,6 @@
 #include <iostream>
 #include <vector>
 
-vector<double>
-input_numbers(size_t count, istream& in)
-{
-    vector<double> result(count);
-    for (size_t i = 0; i < count; i++)
-    {
-        in >> result[i];
-    }
-    return result;
-}
-
 
 
 
@@ -53,6 +42,17 @@ show_histogram_svg(const vector<size_t>& bins, double scaling, size_t avg_bin)
     for (size_t bin : bins)
     {
         string stroke, fill;
+
+        if (bin <= avg_bin)
+        {
+            stroke = "green";
+            fill = "#00FF00";
+        }
+        else
+        {
+            stroke = "red";
+            fill = "#FF0000";
+        }
 
         const double bin_width = BLOCK_WIDTH * bin * scaling;
         svg_text(TEXT_LEFT, top + TEXT_BASELINE, to_string(bin));

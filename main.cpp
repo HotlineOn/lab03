@@ -8,13 +8,33 @@
 
 using namespace std;
 
-vector<double> input_numbers(istream& in, const size_t count) {
-    vector<double> result(count);
-    for (size_t i = 0; i < count; i++) {
+vector<double> input_numbers(istream& in, const size_t number_count) {
+    vector<double> result(number_count);
+    for (size_t i = 0; i < number_count; i++) {
         in >> result[i];
     }
 
     return result;
+}
+
+Input
+read_input(istream& in, bool prompt)
+{
+    Input data;
+
+    if (prompt) cerr << "Enter number count: ";
+    size_t number_count;
+    in >> number_count;
+
+    if (prompt) cerr << "Enter numbers: ";
+    data.numbers = input_numbers(in, number_count);
+
+    size_t bin_count;
+    if (prompt) cerr << "Enter column count: ";
+    in >> bin_count;
+    data.bin_count = bin_count;
+
+    return data;
 }
 
 size_t
@@ -27,26 +47,6 @@ write_data(void* items, size_t item_size, size_t item_count, void* ctx) {
         return data_size;
     }
     else return 0;
-}
-
-Input
-read_input(istream& in, bool prompt)
-{
-    Input data;
-
-    if (prompt) cerr << "Enter number count: ";
-    size_t number_count;
-    cin >> number_count;
-
-    if (prompt) cerr << "Enter numbers: ";
-    data.numbers = input_numbers(number_count, in);
-
-    size_t bin_count;
-    if (prompt) cerr << "Enter column count: ";
-    cin >> bin_count;
-    data.bin_count = bin_count;
-
-    return data;
 }
 
 Input
