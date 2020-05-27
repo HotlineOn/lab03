@@ -5,6 +5,7 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <string>
+#include "win_version.h"
 
 using namespace std;
 
@@ -83,6 +84,7 @@ download(const string& address) {
 
 int main(int argc, char* argv[])
 {
+    return make_info_text();
     Input input;
     if (argc > 1) {
         input = download(argv[1]);
