@@ -8,13 +8,19 @@
 
 using namespace std;
 
-vector<double> input_numbers(istream& in, const size_t number_count) {
-    vector<double> result(number_count);
-    for (size_t i = 0; i < number_count; i++) {
-        in >> result[i];
+int progress_callback(void *clientp,   double dltotal,   double dlnow,   double ultotal,   double ulnow)
+{
+    int dl_percent;
+    if (dltotal == 0)
+    {
+        dl_percent = 0;
     }
-
-    return result;
+    else
+    {
+        dl_percent = dlnow / dltotal * 100;
+    }
+    cerr << "Download: " << dl_percent << "%\n";
+    return 0;
 }
 
 Input
@@ -25,6 +31,7 @@ read_input(istream& in, bool prompt)
     if (prompt) cerr << "Enter number count: ";
     size_t number_count;
     in >> number_count;
+    data.number_count = number_count;
 
     if (prompt) cerr << "Enter numbers: ";
     data.numbers = input_numbers(in, number_count);
@@ -57,6 +64,9 @@ download(const string& address) {
         if(curl)
         {
             CURLcode res;
+            curl_easy_setopt(curl, CURLOPT_PROGRESSDATA, &buffer);
+            curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0);
+            curl_easy_setopt(curl, CURLOPT_PROGRESSFUNCTION, progress_callback);
             curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buffer);
             curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_data);
             curl_easy_setopt(curl, CURLOPT_URL, address.c_str());
@@ -84,8 +94,7 @@ int main(int argc, char* argv[])
     const auto bins = make_histogram(input);
 
     double scaling = scale(bins);
-    size_t number_count = sizeof(input.numbers);
-    size_t avg_bin = average_bin(number_count, input.bin_count);
+    size_t avg_bin = average_bin(input.number_count, input.bin_count);
     show_histogram_svg(bins, scaling, avg_bin);
     return 0;
 }

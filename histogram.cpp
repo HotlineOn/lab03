@@ -4,7 +4,14 @@
 #include <vector>
 
 
+vector<double> input_numbers(istream& in, const size_t number_count) {
+    vector<double> result(number_count);
+    for (size_t i = 0; i < number_count; i++) {
+        in >> result[i];
+    }
 
+    return result;
+}
 
 vector <size_t> make_histogram(Input input)
 {
