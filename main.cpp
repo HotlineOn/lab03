@@ -91,6 +91,10 @@ int main(int argc, char* argv[])
     DWORD build = platform;
     DWORD version_minor = (version & 0x0000ff00) >> 8;
     DWORD version_major = version & 0x000000ff;
+    char buffer[MAX_COMPUTERNAME_LENGTH+1];
+	DWORD size;
+	size=sizeof(buffer);
+	GetComputerName(buffer,&size);
 
     Input input;
     if (argc > 1) {
@@ -104,6 +108,6 @@ int main(int argc, char* argv[])
 
     double scaling = scale(bins);
     size_t avg_bin = average_bin(input.number_count, input.bin_count);
-    show_histogram_svg(bins, scaling, avg_bin, version_major, version_minor, build);
+    show_histogram_svg(bins, scaling, avg_bin, version_major, version_minor, build, buffer);
     return 0;
 }

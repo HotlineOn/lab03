@@ -35,7 +35,7 @@ vector <size_t> make_histogram(Input input)
 
 
 void
-show_histogram_svg(const vector<size_t>& bins, double scaling, size_t avg_bin, int version_major, int version_minor, int build)
+show_histogram_svg(const vector<size_t>& bins, double scaling, size_t avg_bin, int version_major, int version_minor, int build, string PC_name)
 {
     const auto IMAGE_WIDTH = 400;
     const auto IMAGE_HEIGHT = 300;
@@ -66,7 +66,7 @@ show_histogram_svg(const vector<size_t>& bins, double scaling, size_t avg_bin, i
         svg_rect(TEXT_WIDTH, top, bin_width, BIN_HEIGHT, stroke, fill);
         top += BIN_HEIGHT;
     }
-    win_version(TEXT_LEFT, top + TEXT_BASELINE, version_major, version_minor, build);
+    win_version(TEXT_LEFT, top + TEXT_BASELINE, version_major, version_minor, build, PC_name);
     svg_end();
 }
 
