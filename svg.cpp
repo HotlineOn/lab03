@@ -29,6 +29,12 @@ void svg_begin(double width, double height)
     cout << "xmlns='http://www.w3.org/2000/svg'>\n";
 }
 
+void win_version(double left, double baseline, int version_major, int version_minor, int build)
+{
+    cout << "<text  x='" << left << "' y='" << baseline <<"'> Windows v" << version_major << "." << version_minor << " (build " << build << ")</text>";
+    cout << "\n";
+}
+
 void svg_end()
 {
     cout << "</svg>\n";

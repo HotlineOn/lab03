@@ -5,6 +5,7 @@
 #include <curl/curl.h>
 #include <sstream>
 #include <string>
+#include <windows.h>
 
 using namespace std;
 
@@ -83,6 +84,14 @@ download(const string& address) {
 
 int main(int argc, char* argv[])
 {
+    DWORD info = GetVersion();
+    DWORD mask = 0x0000ffff;
+    DWORD version = info & mask;
+    DWORD platform = info >> 16;
+    DWORD build = platform;
+    DWORD version_minor = (version & 0x0000ff00) >> 8;
+    DWORD version_major = version & 0x000000ff;
+
     Input input;
     if (argc > 1) {
         input = download(argv[1]);
@@ -95,6 +104,6 @@ int main(int argc, char* argv[])
 
     double scaling = scale(bins);
     size_t avg_bin = average_bin(input.number_count, input.bin_count);
-    show_histogram_svg(bins, scaling, avg_bin);
+    show_histogram_svg(bins, scaling, avg_bin, version_major, version_minor, build);
     return 0;
 }
